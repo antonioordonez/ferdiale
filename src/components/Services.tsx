@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Button from "./Button";
 import { FadeIn } from "./animations";
 
@@ -39,12 +40,66 @@ const services = [
   },
 ];
 
+function ServiceCard({
+  service,
+  index
+}: {
+  service: typeof services[0];
+  index: number;
+}) {
+  return (
+    <motion.div
+      className="sticky rounded-[20px] border border-white/30 bg-oscuro p-6 shadow-2xl lg:p-10"
+      style={{
+        top: `${120 + index * 20}px`,
+        zIndex: index + 1,
+      }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+    >
+      <h3 className="mb-4 text-[22px] font-bold leading-[1.2] text-white sm:text-[26px] lg:mb-5 lg:text-[32px] lg:leading-[38px]">
+        {service.title}
+      </h3>
+
+      <div className="mb-5 space-y-3 lg:space-y-4">
+        {service.description.map((paragraph, pIndex) => (
+          <p
+            key={pIndex}
+            className="text-[14px] leading-[22px] text-white/90 lg:text-[16px]"
+          >
+            {paragraph}
+          </p>
+        ))}
+      </div>
+
+      {/* Tags */}
+      <div className="mb-6 flex flex-wrap gap-2 lg:mb-8 lg:gap-[15px]">
+        {service.tags.map((tag, tagIndex) => (
+          <motion.span
+            key={tagIndex}
+            className="rounded-full bg-white/20 px-3 py-2 text-[13px] leading-[18px] text-white lg:px-[17px] lg:py-[11px] lg:text-[16px] lg:leading-[22px]"
+            whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
+          >
+            {tag}
+          </motion.span>
+        ))}
+      </div>
+
+      <Button variant="white" href="#" size="small">
+        Más detalles
+      </Button>
+    </motion.div>
+  );
+}
+
 export default function Services() {
   return (
     <section id="servicios" className="bg-primario px-5 py-16 md:px-10 lg:px-[100px] lg:py-[100px]">
       <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
         {/* Left sidebar */}
-        <div className="lg:sticky lg:top-[120px]">
+        <div className="lg:sticky lg:top-[120px] lg:self-start">
           <div className="flex flex-col gap-6 lg:gap-7">
             {/* Section label */}
             <FadeIn>
@@ -80,48 +135,10 @@ export default function Services() {
             </h2>
           </FadeIn>
 
-          {/* Service cards */}
-          <div className="flex flex-col gap-6 lg:gap-10">
+          {/* Service cards - stacking effect */}
+          <div className="flex flex-col gap-6 lg:gap-8">
             {services.map((service, index) => (
-              <FadeIn key={index} delay={index * 0.15}>
-                <motion.div
-                  className="rounded-[20px] border border-white/30 bg-oscuro p-6 lg:sticky lg:top-[120px] lg:p-10"
-                  whileHover={{ scale: 1.01 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="mb-4 text-[22px] font-bold leading-[1.2] text-white sm:text-[26px] lg:mb-5 lg:text-[32px] lg:leading-[38px]">
-                    {service.title}
-                  </h3>
-
-                  <div className="mb-5 space-y-3 lg:space-y-4">
-                    {service.description.map((paragraph, pIndex) => (
-                      <p
-                        key={pIndex}
-                        className="text-[14px] leading-[22px] text-white/90 lg:text-[16px]"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-
-                  {/* Tags */}
-                  <div className="mb-6 flex flex-wrap gap-2 lg:mb-8 lg:gap-[15px]">
-                    {service.tags.map((tag, tagIndex) => (
-                      <motion.span
-                        key={tagIndex}
-                        className="rounded-full bg-white/20 px-3 py-2 text-[13px] leading-[18px] text-white lg:px-[17px] lg:py-[11px] lg:text-[16px] lg:leading-[22px]"
-                        whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}
-                      >
-                        {tag}
-                      </motion.span>
-                    ))}
-                  </div>
-
-                  <Button variant="white" href="#" size="small">
-                    Más detalles
-                  </Button>
-                </motion.div>
-              </FadeIn>
+              <ServiceCard key={index} service={service} index={index} />
             ))}
           </div>
 
