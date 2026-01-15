@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors from Figma design */
+  --color-oscuro: #003860;
+  --color-primario: #156BA8;
+  --color-secundario: #3294BA;
+  --color-texto: #575955;
+  --color-blanco: #FFFFFF;
+  --color-primario-light: rgba(21, 107, 168, 0.1);
+  --color-primario-lighter: rgba(21, 107, 168, 0.2);
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-blanco);
+  color: var(--color-texto);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Custom font weights for headings */
+.font-black {
+  font-weight: 900;
+}
+
+/* Button arrow animation */
+.btn-arrow {
+  transition: transform 0.2s ease;
+}
+
+.btn-arrow:hover .arrow-icon {
+  transform: translateX(3px);
 }
