@@ -1,84 +1,136 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { FadeIn } from "./animations";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const products = [
-  "Transportadores de Envases",
-  "Sistemas de Acumulación",
-  "Cubiertas para transportadores",
-  "Transportadores de Cajas / Packs",
-  "Transportadores de Palets",
+  {
+    id: 1,
+    name: 'Transportadores de Envases',
+    image: '/images/producto-envases.jpg',
+    href: '/productos/transportadores-envases',
+  },
+  {
+    id: 2,
+    name: 'Sistemas sin presión',
+    image: '/images/producto-sin-presion.jpg',
+    href: '/productos/sistemas-sin-presion',
+  },
+  {
+    id: 3,
+    name: 'Complementos',
+    image: '/images/producto-complementos.jpg',
+    href: '/productos/complementos',
+  },
+  {
+    id: 4,
+    name: 'Transportadores de Cajas / Packs',
+    image: '/images/producto-cajas.jpg',
+    href: '/productos/transportadores-cajas',
+  },
+  {
+    id: 5,
+    name: 'Transportadores de Palets',
+    image: '/images/producto-palets.jpg',
+    href: '/productos/transportadores-palets',
+  },
 ];
 
 export default function Products() {
+  const [activeProduct, setActiveProduct] = useState(0);
+
   return (
-    <section id="productos" className="relative bg-oscuro">
-      <div className="mx-auto flex max-w-[1440px] flex-col lg:flex-row lg:items-center">
-        {/* Background image - left side */}
-        <div className="relative h-[300px] w-full sm:h-[400px] lg:h-[811px] lg:w-[720px] lg:shrink-0">
-          <Image
-            src="/images/productos-bg.png"
-            alt="Industrial machinery"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0">
-            <Image
-              src="/images/productos-overlay.png"
-              alt=""
-              fill
-              className="object-cover"
-            />
-          </div>
+    <section id="products" className="bg-dark relative overflow-hidden">
+      <div className="flex flex-col lg:flex-row min-h-[700px] lg:min-h-[811px]">
+        {/* Image Section */}
+        <div className="relative w-full lg:w-1/2 h-[400px] lg:h-auto order-1 lg:order-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeProduct}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={products[activeProduct].image}
+                alt={products[activeProduct].name}
+                fill
+                className="object-cover"
+              />
+              {/* Gradient overlay for mobile text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent lg:hidden" />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Blue gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-dark/30 hidden lg:block" />
         </div>
 
-        {/* Content - right side */}
-        <div className="flex flex-1 flex-col gap-8 px-5 py-12 md:px-10 lg:gap-10 lg:px-[100px] lg:py-[100px]">
-          {/* Section label */}
-          <FadeIn>
-            <div className="flex items-center gap-3">
-              <div className="h-px w-[30px] bg-white" />
-              <span className="text-[14px] leading-[22px] text-white lg:text-[16px]">
-                Nuestros Productos
-              </span>
-            </div>
-          </FadeIn>
+        {/* Content Section */}
+        <div className="relative w-full lg:w-1/2 px-6 md:px-10 lg:px-[100px] py-12 lg:py-[100px] flex items-center order-2 lg:order-2">
+          <div className="w-full max-w-[552px]">
+            {/* Section label */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-3 mb-8 lg:mb-10"
+            >
+              <div className="w-[30px] h-px bg-white" />
+              <span className="text-white text-base">Nuestros Productos</span>
+            </motion.div>
 
-          {/* Products list */}
-          <div className="border-t border-white/10">
-            {products.map((product, index) => (
-              <FadeIn key={index} delay={index * 0.1}>
-                <Link href="#" className="group block">
+            {/* Product List */}
+            <div className="border-t border-white/10">
+              {products.map((product, index) => {
+                const isActive = activeProduct === index;
+
+                return (
                   <motion.div
-                    className="flex items-center border-b border-white/10 py-5 lg:py-[30px]"
-                    whileHover={{ x: 10 }}
-                    transition={{ duration: 0.3 }}
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    onMouseEnter={() => setActiveProduct(index)}
                   >
-                    <span className="text-[20px] font-bold leading-[1.2] text-white transition-colors group-hover:text-secundario sm:text-[28px] lg:text-[36px] lg:leading-[40px]">
-                      {product}
-                    </span>
-                    <motion.svg
-                      className="ml-auto h-6 w-6 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      initial={{ x: -10 }}
-                      whileHover={{ x: 0 }}
+                    <Link
+                      href={product.href}
+                      className={`group flex items-center justify-between w-full text-left py-6 lg:py-8 px-4 border-b border-white/10 transition-all duration-300 ${
+                        isActive ? 'bg-primary/20' : 'hover:bg-white/5'
+                      }`}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </motion.svg>
+                      <span className={`text-white text-[24px] md:text-[30px] lg:text-[36px] font-bold leading-[30px] md:leading-[36px] lg:leading-[40px] transition-all duration-300 ${
+                        isActive ? 'opacity-100 translate-x-2' : 'opacity-70 group-hover:opacity-100'
+                      }`}>
+                        {product.name}
+                      </span>
+
+                      {/* Arrow icon */}
+                      <motion.div
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{
+                          opacity: isActive ? 1 : 0,
+                          x: isActive ? 0 : -10
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="shrink-0 w-[45px] h-[45px] rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform"
+                      >
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                          <path d="M6 18L18 6" strokeLinecap="round" strokeLinejoin="round"/>
+                          <path d="M9 6h9v9" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      </motion.div>
+                    </Link>
                   </motion.div>
-                </Link>
-              </FadeIn>
-            ))}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

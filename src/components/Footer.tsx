@@ -1,130 +1,128 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import Button from "./Button";
-import { FadeIn } from "./animations";
-
-const footerLinks = [
-  { label: "Inicio", href: "#" },
-  { label: "Sobre Ferdiale", href: "#sobre" },
-  { label: "Productos", href: "#productos" },
-  { label: "Servicios", href: "#servicios" },
-];
+import Image from 'next/image';
+import Link from 'next/link';
+import Button from './Button';
 
 export default function Footer() {
   return (
-    <footer className="bg-oscuro overflow-hidden">
-      <div className="mx-auto max-w-[1440px] px-5 pt-12 md:px-10 lg:px-[100px] lg:pt-20">
-        {/* Main footer content */}
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-          {/* Logo and social */}
-          <FadeIn direction="up">
-            <div className="flex flex-col gap-6 lg:gap-[30px]">
+    <footer id="contact" className="bg-dark text-white">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-[100px] pt-16 md:pt-20 pb-10">
+        {/* Main Footer Content */}
+        <div className="flex flex-col md:flex-row justify-between gap-10 md:gap-20">
+          {/* Left: Logo and Social */}
+          <div className="flex flex-col gap-8">
+            <Link href="/" className="relative h-[30px] w-[149px]">
               <Image
                 src="/images/logo-ferdiale-blanco.png"
                 alt="Ferdiale"
-                width={149}
-                height={30}
-                className="h-auto w-[120px] lg:w-[149px]"
+                fill
+                className="object-contain"
               />
-              <div className="flex gap-2">
-                {/* LinkedIn */}
-                <motion.a
-                  href="#"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-secundario transition-colors hover:bg-primario"
-                  aria-label="LinkedIn"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg
-                    className="h-4 w-4 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                  </svg>
-                </motion.a>
-                {/* Instagram */}
-                <motion.a
-                  href="#"
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-secundario transition-colors hover:bg-primario"
-                  aria-label="Instagram"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg
-                    className="h-4 w-4 text-white"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                  </svg>
-                </motion.a>
-              </div>
+            </Link>
+
+            <div className="flex gap-2">
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                aria-label="LinkedIn"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                aria-label="YouTube"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
             </div>
-          </FadeIn>
+          </div>
 
-          {/* Navigation and CTA */}
-          <div className="flex flex-col gap-8 sm:flex-row sm:gap-16 lg:gap-[90px]">
-            {/* Links */}
-            <FadeIn delay={0.1}>
-              <div className="flex flex-col gap-2 lg:gap-[6px]">
-                {footerLinks.map((link, index) => (
-                  <motion.div key={link.label} whileHover={{ x: 5 }}>
-                    <Link
-                      href={link.href}
-                      className="text-[15px] leading-[22px] text-white transition-colors hover:text-secundario lg:text-[16px]"
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            </FadeIn>
+          {/* Right: Navigation and CTA */}
+          <div className="flex flex-col sm:flex-row gap-10 lg:gap-24">
+            {/* Navigation Links */}
+            <nav aria-label="Footer navigation" className="flex flex-col gap-1.5">
+              <Link href="/" className="text-white text-base leading-[22px] hover:opacity-80 transition-opacity">
+                Inicio
+              </Link>
+              <Link href="/sobre-ferdiale" className="text-white text-base leading-[22px] hover:opacity-80 transition-opacity">
+                Sobre Ferdiale
+              </Link>
+              <Link href="/productos" className="text-white text-base leading-[22px] hover:opacity-80 transition-opacity">
+                Productos
+              </Link>
+              <Link href="/servicios" className="text-white text-base leading-[22px] hover:opacity-80 transition-opacity">
+                Servicios
+              </Link>
+            </nav>
 
-            {/* CTA */}
-            <FadeIn delay={0.2}>
-              <Button variant="outline" href="#contacto">
+            {/* CTA Button */}
+            <div>
+              <Button href="/contacto" variant="outline">
                 Contáctanos
               </Button>
-            </FadeIn>
+            </div>
           </div>
         </div>
 
-        {/* Divider and legal */}
-        <FadeIn delay={0.3}>
-          <div className="mt-12 border-t border-white/20 pt-6 lg:mt-[108px] lg:pt-[31px]">
-            <p className="text-[13px] leading-[22px] text-white/80 lg:text-[16px]">
-              <span className="hover:text-white cursor-pointer transition-colors">Política de privacidad</span>
-              {" | "}
-              <span className="hover:text-white cursor-pointer transition-colors">Aviso Legal</span>
-              {" | "}
-              <span className="hover:text-white cursor-pointer transition-colors">Política de cookies</span>
-            </p>
-          </div>
-        </FadeIn>
+        {/* Divider and Legal Links */}
+        <div className="border-t border-white/20 mt-12 pt-8">
+          <nav aria-label="Legal links" className="flex flex-wrap justify-center gap-x-2 text-white text-base">
+            <Link href="/privacidad" className="hover:opacity-80 transition-opacity">
+              Política de privacidad
+            </Link>
+            <span className="opacity-60" aria-hidden="true">|</span>
+            <Link href="/aviso-legal" className="hover:opacity-80 transition-opacity">
+              Aviso Legal
+            </Link>
+            <span className="opacity-60" aria-hidden="true">|</span>
+            <Link href="/cookies" className="hover:opacity-80 transition-opacity">
+              Política de cookies
+            </Link>
+          </nav>
+        </div>
 
-        {/* Partner logos */}
-        <FadeIn delay={0.4}>
-          <div className="flex flex-col items-center justify-between gap-6 py-8 sm:flex-row lg:py-10">
-            <Image
-              src="/images/logo-prtr.png"
-              alt="Plan de Recuperación"
-              width={180}
-              height={47}
-              className="h-[35px] w-auto object-contain lg:h-[47px]"
-            />
-            <Image
-              src="/images/logo-eu.png"
-              alt="Financiado por la Unión Europea"
-              width={180}
-              height={47}
-              className="h-[35px] w-auto object-contain lg:h-[47px]"
-            />
+        {/* EU Logos and Credits */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-8 mt-10">
+          <div className="flex items-center gap-8">
+            <div className="relative h-[40px] w-[120px] shrink-0">
+              <Image
+                src="/images/logo-prtr.png"
+                alt="Plan de Recuperación, Transformación y Resiliencia"
+                fill
+                className="object-contain"
+              />
+            </div>
+
+            <div className="relative h-[40px] w-[180px] shrink-0">
+              <Image
+                src="/images/logo-eu.png"
+                alt="Financiado por la Unión Europea - NextGenerationEU"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
-        </FadeIn>
+
+          <a
+            href="https://abalun.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-white/60 hover:text-white/80 transition-colors text-sm"
+          >
+            <span>Designed and built by</span>
+            <span className="font-medium text-white">Abalun</span>
+          </a>
+        </div>
       </div>
     </footer>
   );

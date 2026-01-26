@@ -1,87 +1,96 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import Button from "./Button";
-import { FadeIn } from "./animations";
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Button from './Button';
 
 export default function About() {
   return (
-    <section id="sobre" className="px-5 py-16 md:px-10 lg:px-[100px] lg:py-[141px]">
-      <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between lg:gap-20">
-        {/* Logo */}
-        <FadeIn direction="left" className="shrink-0">
-          <Image
-            src="/images/logo-ferdiale.png"
-            alt="Ferdiale"
-            width={138}
-            height={28}
-            className="h-[24px] w-auto lg:h-[28px]"
-          />
-        </FadeIn>
+    <section id="about" className="py-16 md:py-24 lg:py-32 px-6 md:px-10 lg:px-[100px]">
+      <div className="max-w-[1440px] mx-auto">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-12 lg:gap-20">
+          {/* Logo */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="shrink-0"
+          >
+            <Image
+              src="/images/logo-ferdiale.png"
+              alt="Ferdiale"
+              width={209}
+              height={42}
+              className="w-[150px] md:w-[209px]"
+            />
+          </motion.div>
 
-        {/* Content */}
-        <div className="max-w-[829px]">
-          {/* Main text */}
-          <div className="flex flex-col gap-6 lg:gap-10">
-            <FadeIn>
-              <h2 className="text-[28px] font-bold leading-[1.15] text-oscuro sm:text-[36px] md:text-[42px] lg:text-[48px] lg:leading-[52px]">
-                Diseñamos, fabricamos y automatizamos sistemas de transporte para
-                líneas de envasado de alimentación y bebidas.
-              </h2>
-            </FadeIn>
+          {/* Content */}
+          <div className="flex-1 max-w-[829px]">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-dark text-[32px] md:text-[40px] lg:text-[48px] font-bold leading-[38px] md:leading-[46px] lg:leading-[52px] mb-8 md:mb-10"
+            >
+              Diseñamos, fabricamos y automatizamos sistemas de transporte para Líneas de envasado y embotellado.
+            </motion.h2>
 
-            <FadeIn delay={0.1}>
-              <p className="text-[15px] leading-[24px] text-texto lg:text-[16px] lg:leading-[22px]">
-                Combinamos tecnología, experiencia e innovación para ofrecer
-                soluciones eficientes y seguras, adaptadas a las necesidades de
-                cada cliente.
-              </p>
-            </FadeIn>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="text-text text-[16px] leading-[22px] mb-8 md:mb-10"
+            >
+              Combinamos tecnología, experiencia e innovación para ofrecer soluciones eficientes y seguras, adaptadas a las necesidades de cada cliente.
+            </motion.p>
 
-            <FadeIn delay={0.2}>
-              <Button variant="primary" href="#servicios">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <Button href="#about" variant="primary">
                 Más Sobre Nosotros
               </Button>
-            </FadeIn>
-          </div>
+            </motion.div>
 
-          {/* Cards */}
-          <div className="mt-12 flex flex-col gap-6 sm:flex-row lg:mt-[108px] lg:gap-[42px]">
-            {/* Card 1 */}
-            <FadeIn delay={0.3} className="flex-1">
+            {/* Cards */}
+            <div className="grid md:grid-cols-2 gap-6 mt-12 md:mt-16">
               <motion.div
-                className="flex h-full min-h-[300px] flex-col justify-between rounded-[20px] bg-primario-light p-6 lg:h-[398px] lg:min-h-0 lg:w-[398px] lg:p-10"
-                whileHover={{ y: -5, boxShadow: "0 10px 40px rgba(21, 107, 168, 0.15)" }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="bg-light-blue rounded-[20px] p-8 md:p-10 flex flex-col justify-between min-h-[350px] md:min-h-[398px]"
               >
-                <h3 className="text-[24px] font-bold leading-[1.2] text-oscuro lg:text-[32px] lg:leading-[38px]">
+                <h3 className="text-dark text-[28px] md:text-[32px] font-bold leading-[34px] md:leading-[38px]">
                   Nuestro compromiso
                 </h3>
-                <p className="mt-4 text-[15px] leading-[22px] text-oscuro lg:mt-0 lg:text-[16px]">
-                  Optimizar los procesos productivos con equipos a medida,
-                  integraciones precisas y un servicio cercano que garantiza
-                  rendimiento, fiabilidad y tranquilidad en cada proyecto.
+                <p className="text-dark text-[16px] leading-[22px]">
+                  Optimizar los procesos productivos con equipos a medida, integraciones precisas y un servicio cercano que garantiza rendimiento, fiabilidad y tranquilidad en cada proyecto.
                 </p>
               </motion.div>
-            </FadeIn>
 
-            {/* Card 2 */}
-            <FadeIn delay={0.4} className="flex-1">
               <motion.div
-                className="flex h-full min-h-[300px] flex-col justify-between rounded-[20px] bg-primario-light p-6 lg:h-[398px] lg:min-h-0 lg:w-[398px] lg:p-10"
-                whileHover={{ y: -5, boxShadow: "0 10px 40px rgba(21, 107, 168, 0.15)" }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="bg-light-blue rounded-[20px] p-8 md:p-10 flex flex-col justify-between min-h-[350px] md:min-h-[398px]"
               >
-                <h3 className="text-[24px] font-bold leading-[1.2] text-oscuro lg:text-[32px] lg:leading-[38px]">
+                <h3 className="text-dark text-[28px] md:text-[32px] font-bold leading-[34px] md:leading-[38px]">
                   Nuestro objetivo
                 </h3>
-                <p className="mt-4 text-[15px] leading-[22px] text-oscuro lg:mt-0 lg:text-[16px]">
-                  Queremos ser tu socio tecnológico de confianza en el crecimiento
-                  y automatización de tu Línea de producción.
+                <p className="text-dark text-[16px] leading-[22px]">
+                  Queremos ser tu socio tecnológico de confianza en el crecimiento y automatización de tu Línea de producción.
                 </p>
               </motion.div>
-            </FadeIn>
+            </div>
           </div>
         </div>
       </div>

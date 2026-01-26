@@ -1,195 +1,191 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-const navItems = [
-  { label: "Inicio", href: "#" },
-  { label: "Sobre Ferdiale", href: "#sobre" },
-  { label: "Productos", href: "#productos" },
-  { label: "Servicios", href: "#servicios" },
+const navLinks = [
+  { href: '/', label: 'Inicio', sections: ['/'] },
+  { href: '/sobre-ferdiale', label: 'Sobre Ferdiale', sections: ['/sobre-ferdiale'] },
+  { href: '/productos', label: 'Productos', sections: ['/productos'] },
+  { href: '/servicios', label: 'Servicios', sections: ['/servicios'] },
 ];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('/');
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
+  // Detect scroll for header background
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menu on resize to desktop
+  // Detect active section based on scroll position and pathname
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setIsMenuOpen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Prevent scroll when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
+    // If on a dedicated page, set that as active
+    if (pathname !== '/') {
+      setActiveSection(pathname);
+      return;
     }
-    return () => {
-      document.body.style.overflow = "unset";
+
+    const handleScroll = () => {
+      const sections = ['services', 'products', 'about'];
+      const scrollPosition = window.scrollY + 200;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetHeight = element.offsetHeight;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(`#${section}`);
+            return;
+          }
+        }
+      }
+      setActiveSection('/');
     };
-  }, [isMenuOpen]);
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathname]);
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-50 flex flex-col">
+    <header className="fixed top-0 left-0 right-0 z-50">
       {/* Top accent bar */}
-      <motion.div
-        className="h-[10px] w-full bg-primario"
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        style={{ transformOrigin: "left" }}
-      />
+      <div className="h-[10px] bg-primary" />
 
       {/* Main navigation */}
-      <motion.nav
-        className={`flex h-[65px] items-center justify-between bg-oscuro px-5 transition-all duration-300 lg:h-[75px] lg:px-10 ${
-          isScrolled ? "shadow-lg" : ""
-        }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        <Link href="/" className="relative z-50">
+      <nav className={`bg-dark h-[75px] flex items-center justify-between px-6 lg:px-10 transition-all duration-300 ${scrolled ? 'shadow-lg' : ''}`}>
+        {/* Logo */}
+        <Link href="/" className="relative h-[26px] w-[126px]">
           <Image
             src="/images/logo-ferdiale-blanco.png"
             alt="Ferdiale"
-            width={126}
-            height={26}
-            className="h-auto w-[100px] lg:w-[126px]"
+            fill
+            className="object-contain"
+            priority
           />
         </Link>
 
-        {/* Desktop menu */}
-        <div className="hidden items-center gap-10 lg:flex">
-          {navItems.map((item, index) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.3 + index * 0.1 }}
-            >
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex items-center gap-10">
+          {navLinks.map((link) => {
+            const isActive = link.sections.includes(activeSection) || (link.href === '/' && activeSection === '/' && pathname === '/');
+
+            return (
               <Link
-                href={item.href}
-                className="group relative text-[14px] font-medium uppercase leading-6 tracking-wide text-white transition-opacity hover:opacity-80"
+                key={link.href}
+                href={link.href}
+                className="relative text-white text-[14px] font-medium uppercase tracking-wide py-2 group"
               >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-primario transition-all duration-300 group-hover:w-full" />
+                <span className="relative">
+                  {link.label}
+
+                  {/* Underline - visible when active */}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 h-[2px] bg-white"
+                    initial={false}
+                    animate={{
+                      width: isActive ? '100%' : '0%',
+                      opacity: isActive ? 1 : 0,
+                    }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  />
+
+                  {/* Hover underline animation */}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-white/60 group-hover:w-full transition-all duration-300 ease-out" />
+                </span>
               </Link>
-            </motion.div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Desktop CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.6 }}
-          className="hidden lg:block"
+        {/* CTA Button - Desktop */}
+        <Link
+          href="/contacto"
+          className="hidden lg:block bg-white text-primary text-[14px] font-bold uppercase px-5 py-3 rounded-[15px] hover:bg-opacity-90 transition-all"
         >
-          <Link
-            href="#contacto"
-            className="rounded-[15px] bg-white px-[18px] py-3 text-[14px] font-bold uppercase leading-5 text-primario transition-all duration-300 hover:bg-primario hover:text-white hover:shadow-lg"
-          >
-            Contacta
-          </Link>
-        </motion.div>
+          Contacta
+        </Link>
 
-        {/* Mobile menu button */}
+        {/* Mobile Menu Button */}
         <button
+          className="lg:hidden text-white p-2"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
           aria-label="Toggle menu"
         >
-          <motion.span
-            className="block h-0.5 w-6 bg-white"
-            animate={{
-              rotate: isMenuOpen ? 45 : 0,
-              y: isMenuOpen ? 8 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-          />
-          <motion.span
-            className="block h-0.5 w-6 bg-white"
-            animate={{
-              opacity: isMenuOpen ? 0 : 1,
-            }}
-            transition={{ duration: 0.3 }}
-          />
-          <motion.span
-            className="block h-0.5 w-6 bg-white"
-            animate={{
-              rotate: isMenuOpen ? -45 : 0,
-              y: isMenuOpen ? -8 : 0,
-            }}
-            transition={{ duration: 0.3 }}
-          />
-        </button>
-      </motion.nav>
-
-      {/* Mobile menu overlay */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            className="fixed inset-0 z-40 bg-oscuro lg:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <div className="flex h-full flex-col items-center justify-center gap-8 pt-[75px]">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                >
-                  <Link
-                    href={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="text-2xl font-medium uppercase tracking-wide text-white transition-colors hover:text-primario"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
+            {isMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+      </nav>
+
+      {/* Mobile Menu - Full Screen */}
+      <motion.div
+        initial={false}
+        animate={{
+          opacity: isMenuOpen ? 1 : 0,
+          pointerEvents: isMenuOpen ? 'auto' : 'none',
+        }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        className="lg:hidden fixed inset-0 top-[85px] bg-dark z-40"
+      >
+        <div className="flex flex-col justify-center items-center h-full gap-8">
+          {navLinks.map((link, index) => {
+            const isActive = activeSection === link.href;
+
+            return (
               <motion.div
+                key={link.href}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.3, delay: 0.4 }}
+                animate={{ opacity: isMenuOpen ? 1 : 0, y: isMenuOpen ? 0 : 20 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
               >
                 <Link
-                  href="#contacto"
+                  href={link.href}
+                  className={`text-white text-[24px] font-bold uppercase tracking-wide transition-colors ${isActive ? 'text-primary' : 'hover:text-primary/80'}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="mt-4 inline-block rounded-[15px] bg-white px-8 py-4 text-lg font-bold uppercase text-primario transition-all duration-300 hover:bg-primario hover:text-white"
                 >
-                  Contacta
+                  {link.label}
                 </Link>
               </motion.div>
-            </div>
+            );
+          })}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isMenuOpen ? 1 : 0, y: isMenuOpen ? 0 : 20 }}
+            transition={{ duration: 0.4, delay: navLinks.length * 0.1 }}
+            className="mt-4"
+          >
+            <Link
+              href="/contacto"
+              className="bg-white text-primary text-[18px] font-bold uppercase px-8 py-4 rounded-[15px] inline-block"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contacta
+            </Link>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </div>
+      </motion.div>
     </header>
   );
 }
