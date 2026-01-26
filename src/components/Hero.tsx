@@ -1,25 +1,39 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Button from './Button';
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"]
+  });
+
+  const videoY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+
   return (
-    <section className="relative h-screen min-h-[700px] flex items-end pb-16 md:pb-24 pt-[85px]">
-      {/* Video Background */}
+    <section ref={sectionRef} className="relative h-screen min-h-[700px] flex items-end pb-16 md:pb-24 pt-[85px]">
+      {/* Video Background with Parallax */}
       <div className="absolute inset-0 overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="absolute w-full h-full object-cover"
+        <motion.div
+          style={{ y: videoY }}
+          className="absolute inset-0 h-[130%] -top-[15%]"
         >
-          {/* WebM ofrece mejor calidad/compresión - añadir si disponible */}
-          {/* <source src="/videos/hero-video.webm" type="video/webm" /> */}
-          <source src="/videos/hero-video.mp4" type="video/mp4" />
-        </video>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute w-full h-full object-cover"
+          >
+            {/* WebM ofrece mejor calidad/compresión - añadir si disponible */}
+            {/* <source src="/videos/hero-video.webm" type="video/webm" /> */}
+            <source src="/videos/hero-video.mp4" type="video/mp4" />
+          </video>
+        </motion.div>
 
         {/* Blue overlay */}
         <div className="absolute inset-0 bg-primary mix-blend-color" />

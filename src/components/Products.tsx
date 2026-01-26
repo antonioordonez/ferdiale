@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
+import ImageWithSkeleton from './ImageWithSkeleton';
 
 const products = [
   {
@@ -41,6 +41,9 @@ const products = [
 export default function Products() {
   const [activeProduct, setActiveProduct] = useState(0);
 
+  // Get all image URLs for preloading
+  const allImageUrls = products.map(p => p.image);
+
   return (
     <section id="products" className="bg-dark relative overflow-hidden">
       <div className="flex flex-col lg:flex-row min-h-[700px] lg:min-h-[811px]">
@@ -55,11 +58,13 @@ export default function Products() {
               transition={{ duration: 0.5 }}
               className="absolute inset-0"
             >
-              <Image
+              <ImageWithSkeleton
                 src={products[activeProduct].image}
                 alt={products[activeProduct].name}
                 fill
                 className="object-cover"
+                priority={activeProduct === 0}
+                preloadSrcs={allImageUrls}
               />
               {/* Gradient overlay for mobile text readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent lg:hidden" />
@@ -101,8 +106,10 @@ export default function Products() {
                   >
                     <Link
                       href={product.href}
-                      className={`group flex items-center justify-between w-full text-left py-6 lg:py-8 px-4 border-b border-white/10 transition-all duration-300 ${
-                        isActive ? 'bg-primary/20' : 'hover:bg-white/5'
+                      className={`group flex items-center justify-between w-full text-left py-6 lg:py-8 px-4 border-b border-white/10 transition-all duration-300 rounded-lg ${
+                        isActive
+                          ? 'bg-primary/20 shadow-lg shadow-primary/20'
+                          : 'hover:bg-white/5 hover:pl-6'
                       }`}
                     >
                       <span className={`text-white text-[24px] md:text-[30px] lg:text-[36px] font-bold leading-[30px] md:leading-[36px] lg:leading-[40px] transition-all duration-300 ${

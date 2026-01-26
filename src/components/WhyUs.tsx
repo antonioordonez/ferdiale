@@ -80,7 +80,11 @@ export default function WhyUs() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-light-blue rounded-[10px] p-6 md:p-8"
+              whileHover={{
+                y: -8,
+                boxShadow: "0 20px 40px -15px rgba(21, 107, 168, 0.3)"
+              }}
+              className="bg-light-blue rounded-[10px] p-6 md:p-8 cursor-pointer transition-colors duration-300 hover:bg-primary/15"
             >
               <h3 className="text-dark text-[20px] md:text-[22px] lg:text-[24px] font-bold leading-[26px] md:leading-[28px] lg:leading-[30px] mb-5">
                 {feature.title}
