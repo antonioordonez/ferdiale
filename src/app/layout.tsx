@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     description: "Diseñamos, fabricamos y automatizamos sistemas de transporte para líneas de envasado y embotellado. Más de 20 años de experiencia en soluciones industriales a medida.",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Ferdiale Ingeniería - Sistemas de transporte industrial",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ferdiale Ingeniería - Sistemas de transporte para líneas de producción",
     description: "Diseñamos, fabricamos y automatizamos sistemas de transporte para líneas de envasado y embotellado.",
-    images: ["/images/og-image.jpg"],
+    images: ["/twitter-image.jpg"],
   },
   robots: {
     index: true,
@@ -173,8 +173,10 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+        <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#1E3A5F" />
         <script
