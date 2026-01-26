@@ -43,11 +43,9 @@ export default function CookieConsent() {
     // Here you would initialize/disable analytics, marketing scripts, etc.
     if (prefs.analytics) {
       // Initialize Google Analytics, etc.
-      console.log('Analytics cookies enabled');
     }
     if (prefs.marketing) {
       // Initialize marketing pixels, etc.
-      console.log('Marketing cookies enabled');
     }
   };
 

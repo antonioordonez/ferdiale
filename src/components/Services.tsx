@@ -106,12 +106,7 @@ export default function Services() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
-                    whileHover={{
-                      scale: 1.02,
-                      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-                      borderColor: "rgba(255, 255, 255, 0.5)"
-                    }}
-                    className="bg-dark rounded-[20px] p-6 md:p-8 lg:p-10 border border-white/30 mb-6 lg:mb-10 shadow-xl transition-colors duration-300 cursor-pointer"
+                    className="bg-dark rounded-[20px] p-6 md:p-8 lg:p-10 border border-white/30 mb-6 lg:mb-10 shadow-xl"
                   >
                     <h3 className="text-white text-[24px] md:text-[28px] lg:text-[32px] font-bold leading-[30px] md:leading-[34px] lg:leading-[38px] mb-5">
                       {service.title}

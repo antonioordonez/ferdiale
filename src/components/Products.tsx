@@ -106,10 +106,8 @@ export default function Products() {
                   >
                     <Link
                       href={product.href}
-                      className={`group flex items-center justify-between w-full text-left py-6 lg:py-8 px-4 border-b border-white/10 transition-all duration-300 rounded-lg ${
-                        isActive
-                          ? 'bg-primary/20 shadow-lg shadow-primary/20'
-                          : 'hover:bg-white/5 hover:pl-6'
+                      className={`group flex items-center justify-between w-full text-left py-6 lg:py-8 px-4 border-b border-white/10 transition-all duration-300 ${
+                        isActive ? 'bg-primary/20' : 'hover:bg-white/5'
                       }`}
                     >
                       <span className={`text-white text-[24px] md:text-[30px] lg:text-[36px] font-bold leading-[30px] md:leading-[36px] lg:leading-[40px] transition-all duration-300 ${
