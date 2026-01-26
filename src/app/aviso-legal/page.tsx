@@ -48,7 +48,7 @@ export default function AvisoLegal() {
             <section className="mb-10">
               <h2 className="text-dark text-[24px] font-bold mb-4">2. Objeto</h2>
               <p className="mb-4">
-                El presente Aviso Legal regula el uso del sitio web <strong>ferdiale.com</strong> (en adelante, el "Sitio Web"), del que es titular FERDIALE INGENIERIA, S.L. (en adelante, "FERDIALE").
+                El presente Aviso Legal regula el uso del sitio web <strong>ferdiale.com</strong> (en adelante, el «Sitio Web»), del que es titular FERDIALE INGENIERIA, S.L. (en adelante, «FERDIALE»).
               </p>
               <p>
                 La navegación por el Sitio Web atribuye la condición de usuario del mismo e implica la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en este Aviso Legal, que pueden sufrir modificaciones.

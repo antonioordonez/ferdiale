@@ -15,7 +15,6 @@ export default function Hero() {
           playsInline
           preload="auto"
           className="absolute w-full h-full object-cover"
-          style={{ imageRendering: 'high-quality' }}
         >
           {/* WebM ofrece mejor calidad/compresión - añadir si disponible */}
           {/* <source src="/videos/hero-video.webm" type="video/webm" /> */}

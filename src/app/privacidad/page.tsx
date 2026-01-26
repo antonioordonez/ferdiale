@@ -44,7 +44,7 @@ export default function Privacidad() {
             <section className="mb-10">
               <h2 className="text-dark text-[24px] font-bold mb-4">2. Datos que recopilamos</h2>
               <p className="mb-4">
-                En FERDIALE INGENIERIA, S.L. (en adelante, "FERDIALE") tratamos los datos personales que nos facilita voluntariamente a través de:
+                En FERDIALE INGENIERIA, S.L. (en adelante, «FERDIALE») tratamos los datos personales que nos facilita voluntariamente a través de:
               </p>
               <ul className="list-disc pl-6 space-y-2 mb-4">
                 <li><strong>Formularios de contacto:</strong> nombre, apellidos, empresa, cargo, email y mensaje.</li>
