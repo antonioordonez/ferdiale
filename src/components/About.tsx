@@ -54,7 +54,7 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Button href="#about" variant="primary">
+              <Button href="/sobre-ferdiale" variant="primary">
                 Más Sobre Nosotros
               </Button>
             </motion.div>

@@ -65,7 +65,7 @@ export default function WhyUs() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Button href="#contact" variant="dark">
+            <Button href="/contacto" variant="dark">
               Contáctanos
             </Button>
           </motion.div>
