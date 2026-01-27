@@ -95,9 +95,9 @@ export default function Services() {
               {services.map((service, index) => (
                 <div
                   key={service.id}
-                  className="lg:sticky"
+                  className="sticky"
                   style={{
-                    top: `${120 + index * 40}px`,
+                    top: `${80 + index * 20}px`,
                     zIndex: index + 1,
                   }}
                 >
