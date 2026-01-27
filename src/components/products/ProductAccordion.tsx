@@ -145,78 +145,76 @@ export default function ProductAccordion() {
           const isActive = activeIndex === index;
 
           return (
-            <motion.div
+            <div
               key={product.id}
-              layout
               onClick={() => setActiveIndex(index)}
-              className={`relative rounded-[18px] border border-white/10 cursor-pointer overflow-hidden ${
+              className={`rounded-[18px] border border-white/10 cursor-pointer overflow-hidden transition-colors duration-300 ${
                 isActive ? 'bg-primary' : 'bg-primary/60'
               }`}
-              initial={false}
-              animate={{
-                height: isActive ? 'auto' : 80,
-              }}
-              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             >
-              {/* Header - Always Visible */}
-              <div className="flex items-center gap-4 p-4 h-[80px]">
-                <span className="text-white font-black text-[36px] md:text-[48px] leading-none w-[50px]">
-                  {product.id}
-                </span>
-                {!isActive && (
+              {/* Collapsed State */}
+              {!isActive && (
+                <div className="flex items-center gap-4 p-4 h-[80px]">
+                  <span className="text-white font-black text-[36px] md:text-[48px] leading-none w-[50px]">
+                    {product.id}
+                  </span>
                   <h3 className="text-white font-bold text-[18px] md:text-[24px] leading-[24px] md:leading-[28px]">
                     {product.title}
                   </h3>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* Expanded Content */}
-              <AnimatePresence>
-                {isActive && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {/* Media */}
-                    <div className="relative w-full h-[200px] md:h-[280px]">
-                      {product.media.type === 'video' ? (
-                        <video
-                          autoPlay
-                          muted
-                          loop
-                          playsInline
-                          className="absolute inset-0 w-full h-full object-cover"
-                        >
-                          <source src={product.media.src} type="video/mp4" />
-                        </video>
-                      ) : (
-                        <Image
-                          src={product.media.src}
-                          alt={product.title}
-                          fill
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
+              {isActive && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Header */}
+                  <div className="flex items-center gap-4 p-4 h-[80px]">
+                    <span className="text-white font-black text-[36px] md:text-[48px] leading-none w-[50px]">
+                      {product.id}
+                    </span>
+                  </div>
 
-                    {/* Content */}
-                    <div className="flex flex-col items-start gap-3 p-4 pt-3">
-                      <h3 className="text-white font-bold text-[24px] md:text-[32px] leading-[28px] md:leading-[36px]">
-                        {product.title}
-                      </h3>
-                      <p className="text-white text-[14px] md:text-[16px] leading-[20px] md:leading-[22px]">
-                        {product.description}
-                      </p>
-                      <Button href={product.href} variant="white-primary" size="small">
-                        Más Detalles
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+                  {/* Media */}
+                  <div className="relative w-full h-[200px] md:h-[280px]">
+                    {product.media.type === 'video' ? (
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover"
+                      >
+                        <source src={product.media.src} type="video/mp4" />
+                      </video>
+                    ) : (
+                      <Image
+                        src={product.media.src}
+                        alt={product.title}
+                        fill
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex flex-col items-start gap-3 p-4 pt-3">
+                    <h3 className="text-white font-bold text-[24px] md:text-[32px] leading-[28px] md:leading-[36px]">
+                      {product.title}
+                    </h3>
+                    <p className="text-white text-[14px] md:text-[16px] leading-[20px] md:leading-[22px]">
+                      {product.description}
+                    </p>
+                    <Button href={product.href} variant="white-primary" size="small">
+                      Más Detalles
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </div>
           );
         })}
       </div>
