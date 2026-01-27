@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 const services = [
@@ -40,46 +40,31 @@ export default function ServiceAccordion() {
         const isActive = activeIndex === index;
 
         return (
-          <motion.div
+          <div
             key={service.id}
-            layout
             onClick={() => setActiveIndex(index)}
-            className={`relative rounded-[20px] border border-white/10 cursor-pointer overflow-hidden ${
+            className={`rounded-[20px] border border-white/10 cursor-pointer overflow-hidden transition-colors duration-300 ${
               isActive ? 'bg-primary' : 'bg-primary/60'
             }`}
-            initial={false}
-            animate={{
-              height: isActive ? 280 : 86,
-            }}
-            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           >
             {/* Collapsed State - Just Title */}
-            <AnimatePresence>
-              {!isActive && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute inset-0 flex items-center px-6 lg:px-[25px]"
-                >
-                  <h3 className="text-white font-bold text-[20px] md:text-[28px] lg:text-[32px] leading-[26px] md:leading-[34px] lg:leading-[38px]">
-                    {service.title}
-                  </h3>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {!isActive && (
+              <div className="flex items-center px-6 lg:px-[25px] h-[86px]">
+                <h3 className="text-white font-bold text-[20px] md:text-[28px] lg:text-[32px] leading-[26px] md:leading-[34px] lg:leading-[38px]">
+                  {service.title}
+                </h3>
+              </div>
+            )}
 
             {/* Expanded State - Full Content */}
-            <AnimatePresence>
-              {isActive && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3, delay: 0.1 }}
-                  className="absolute inset-0 flex"
-                >
+            {isActive && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Desktop: side-by-side layout with fixed height */}
+                <div className="relative lg:h-[280px]">
                   {/* Content */}
                   <div className="flex flex-col gap-[26px] p-6 lg:p-[30px] w-full lg:w-[692px]">
                     <h3 className="text-white font-bold text-[24px] md:text-[28px] lg:text-[32px] leading-[30px] md:leading-[34px] lg:leading-[38px]">
@@ -90,8 +75,8 @@ export default function ServiceAccordion() {
                     </p>
                   </div>
 
-                  {/* Image - Desktop only */}
-                  <div className="hidden lg:block absolute right-0 top-0 w-[453px] h-full rounded-r-[20px] overflow-hidden">
+                  {/* Image - Mobile: below content, Desktop: absolute right */}
+                  <div className="relative w-full h-[200px] md:h-[240px] lg:absolute lg:right-0 lg:top-0 lg:w-[453px] lg:h-full rounded-b-[20px] lg:rounded-b-none lg:rounded-r-[20px] overflow-hidden">
                     <Image
                       src={service.image}
                       alt={service.title}
@@ -99,10 +84,10 @@ export default function ServiceAccordion() {
                       className="object-cover"
                     />
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
+                </div>
+              </motion.div>
+            )}
+          </div>
         );
       })}
     </div>
