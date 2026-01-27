@@ -72,7 +72,7 @@ export default function Services() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <Button href="#contact" variant="white">
+              <Button href="/contacto" variant="white">
                 Háblanos de tu proyecto
               </Button>
             </motion.div>
