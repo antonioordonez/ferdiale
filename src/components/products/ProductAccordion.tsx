@@ -95,7 +95,7 @@ export default function ProductAccordion() {
                     className="absolute inset-0 flex"
                   >
                     {/* Content */}
-                    <div className="flex flex-col items-start gap-[18px] p-[15px] pt-[40px] w-[440px]">
+                    <div className="flex flex-col items-start gap-[18px] p-[15px] pt-[40px] flex-1 min-w-0">
                       <span className="text-white font-black text-[54px] leading-[58px]">
                         {product.id}
                       </span>
@@ -111,7 +111,7 @@ export default function ProductAccordion() {
                     </div>
 
                     {/* Media */}
-                    <div className="absolute right-0 top-0 w-[420px] h-full rounded-r-[18px] overflow-hidden">
+                    <div className="relative w-[360px] h-full rounded-r-[18px] overflow-hidden flex-shrink-0">
                       {product.media.type === 'video' ? (
                         <video
                           autoPlay

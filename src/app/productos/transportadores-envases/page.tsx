@@ -8,11 +8,21 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Button from '@/components/Button';
 import ProductAccordion from '@/components/products/ProductAccordion';
+import ProductImageSlider from '@/components/products/ProductImageSlider';
 
 const productData = {
   title: 'Transportadores de Envases',
   description: 'Diseñado para un rendimiento continuo, nuestro transportador de envases combina durabilidad, precisión y versatilidad. Su estructura robusta garantiza una operación confiable incluso en entornos exigentes, mientras que su sistema adaptable se ajusta fácilmente a diferentes tamaños y tipos de envases.',
   image: '/images/product-detail-envases.png',
+  sliderItems: [
+    { type: 'image' as const, src: '/images/product-detail-envases.png', alt: 'Transportador de envases Ferdiale - Vista general' },
+    { type: 'image' as const, src: '/images/envases-slider-1.jpg', alt: 'Transportador de envases Ferdiale - Detalle del sistema' },
+    { type: 'image' as const, src: '/images/envases-slider-2.jpg', alt: 'Transportador de envases Ferdiale - Línea de producción' },
+    { type: 'image' as const, src: '/images/envases-slider-3.jpg', alt: 'Transportador de envases Ferdiale - Sistema de transporte' },
+    { type: 'image' as const, src: '/images/envases-slider-4.jpg', alt: 'Transportador de envases Ferdiale - Estructura robusta' },
+    { type: 'image' as const, src: '/images/envases-slider-5.jpg', alt: 'Transportador de envases Ferdiale - Operación continua' },
+    { type: 'image' as const, src: '/images/envases-slider-6.png', alt: 'Transportador de envases Ferdiale - Vista de detalle' },
+  ],
   enQueConsiste: {
     intro: 'Optimiza el flujo de producción con una solución que reduce tiempos de inactividad, mejora la eficiencia operativa y asegura la calidad del producto en cada etapa de la línea. Ideal para mantener tu planta siempre en movimiento.',
     features: [
@@ -209,21 +219,14 @@ export default function TransportadoresEnvases() {
               </div>
             </motion.div>
 
-            {/* Right: Image */}
+            {/* Right: Image Slider */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full lg:w-[580px] h-[300px] md:h-[400px] lg:h-[550px] relative rounded-[20px] overflow-hidden"
+              className="w-full lg:flex-1 h-[300px] md:h-[400px] lg:h-[550px] relative rounded-[20px] overflow-hidden"
             >
-              <Image
-                src={productData.image}
-                alt={`Sistema de ${productData.title} de Ferdiale en funcionamiento`}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 1024px) 100vw, 580px"
-              />
+              <ProductImageSlider items={productData.sliderItems} />
             </motion.div>
           </div>
         </div>

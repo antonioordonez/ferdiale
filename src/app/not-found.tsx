@@ -8,25 +8,18 @@ import Footer from '@/components/Footer';
 
 // Animated conveyor belt with falling bottle
 function ConveyorAnimation() {
-  const [bottlePosition, setBottlePosition] = useState(0);
-  const [isFalling, setIsFalling] = useState(false);
+  const [cycle, setCycle] = useState(0);
+  const beltEnd = 72; // percentage where the belt ends
+  const totalMoveDuration = 3; // seconds to cross the belt
+  const fallDuration = 0.8;
+  const pauseAfterFall = 1;
+  const fullCycleDuration = totalMoveDuration + fallDuration + pauseAfterFall;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBottlePosition((prev) => {
-        if (prev >= 100) {
-          setIsFalling(true);
-          setTimeout(() => {
-            setIsFalling(false);
-            setBottlePosition(0);
-          }, 1500);
-          return prev;
-        }
-        return prev + 2;
-      });
-    }, 50);
-
-    return () => clearInterval(interval);
+    const timer = setInterval(() => {
+      setCycle((prev) => prev + 1);
+    }, fullCycleDuration * 1000);
+    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -59,20 +52,26 @@ function ConveyorAnimation() {
         404
       </div>
 
-      {/* Bottle */}
+      {/* Bottle - full cycle: enter from left, travel across belt, fall off the end */}
       <motion.div
+        key={cycle}
         className="absolute bottom-[80px] w-[30px] h-[50px]"
-        style={{ left: `${Math.min(bottlePosition, 75)}%` }}
-        animate={
-          isFalling
-            ? {
-                y: [0, 120],
-                rotate: [0, 45],
-                opacity: [1, 0],
-              }
-            : {}
-        }
-        transition={{ duration: 0.8, ease: 'easeIn' }}
+        initial={{ left: '-10%', y: 0, rotate: 0, opacity: 1 }}
+        animate={{
+          left: ['-10%', `${beltEnd}%`, `${beltEnd}%`],
+          y: [0, 0, 140],
+          rotate: [0, 0, 45],
+          opacity: [1, 1, 0],
+        }}
+        transition={{
+          duration: totalMoveDuration + fallDuration,
+          times: [
+            0,
+            totalMoveDuration / (totalMoveDuration + fallDuration),
+            1,
+          ],
+          ease: ['linear', 'easeIn'],
+        }}
       >
         {/* Bottle shape */}
         <svg viewBox="0 0 30 50" fill="none" className="w-full h-full">
@@ -142,7 +141,7 @@ export default function NotFound() {
                 href="/contacto"
                 className="inline-flex items-center justify-center border border-primary text-primary rounded-[20px] py-3 px-8 text-base font-medium hover:bg-primary/5 transition-colors"
               >
-                Contactar soporte
+                Contactar
               </Link>
             </div>
 

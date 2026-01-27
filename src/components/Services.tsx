@@ -127,7 +127,7 @@ export default function Services() {
                       ))}
                     </div>
 
-                    <Button href="#services" variant="white">
+                    <Button href={`/servicios#servicio-${service.id}`} variant="white">
                       Más detalles
                     </Button>
                   </motion.div>
